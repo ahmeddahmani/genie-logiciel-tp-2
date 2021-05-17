@@ -2,3 +2,8 @@
 /timer-service/target/
 /time-service-impl/target/
 /launcher/target/
+/timer-service-impl-withdelegation/target/
+/time-display/target/
+/time-action/target/
+/time-control/target/
+/mywatch-withstate/target/

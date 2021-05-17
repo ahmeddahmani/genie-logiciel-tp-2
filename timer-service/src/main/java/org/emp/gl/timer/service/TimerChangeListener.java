@@ -22,7 +22,7 @@ public interface TimerChangeListener
     final static String HEURE_PROP = "heure" ;
 
 
-    // cette méthode sera supprimé et remplacé par celle provenant du PropertyChangeListener
-    void propertyChange (String propertyName, Object oldValue, Object newValue) ;
+    // propertyChange aprés délégation ;
+    void propertyChange (PropertyChangeEvent pce) ;
                   
 }

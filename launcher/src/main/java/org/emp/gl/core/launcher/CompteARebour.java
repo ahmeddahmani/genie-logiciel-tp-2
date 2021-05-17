@@ -22,7 +22,7 @@ public class CompteARebour implements TimerChangeListener {
         this.compteArebours = compteARebour ;
     }
 
-    @Override
+   /* @Override
     public void propertyChange(String prop, Object oldValue, Object newValue) {
         if (prop.equals(TimerChangeListener.SECONDE_PROP)) {
             compteArebours--;
@@ -34,13 +34,25 @@ public class CompteARebour implements TimerChangeListener {
                     .getService(TimerService.class)
                     .removeTimeChangeListener(this);
         }
-    }
+    }*/
 
     // cette méthode provient du PropertyChangeListener 
     // à utiliser plustard ! (Ignorer pour l'instant !
     @Override
     public void propertyChange(PropertyChangeEvent pce) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (pce.getPropertyName().equals(TimerChangeListener.SECONDE_PROP)) {
+            compteArebours--;
+            System.out.println("Il me reste : " + compteArebours);
+        }
+
+        if (compteArebours == 0) { // se désabonner du TimerService ! 
+            Lookup.getInstance()
+                    .getService(TimerService.class)
+                    .removeTimeChangeListener(this);
+            System.out.println("romoved");
+            //System.exit(compteArebours);
+        }
     }
 
 }

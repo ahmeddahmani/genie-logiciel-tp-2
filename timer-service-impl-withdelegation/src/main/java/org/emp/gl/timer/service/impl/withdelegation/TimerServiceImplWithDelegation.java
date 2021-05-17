@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.emp.gl.time.service.impl;
+package org.emp.gl.timer.service.impl.withdelegation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,27 +17,24 @@ import org.emp.gl.timer.service.TimerService;
 
 /**
  *
- * @author tina
+ * @author ahmed
  */
-public class DummyTimeServiceImpl{
-        /*
-        extends TimerTask
-        implements TimerService {
-
-    int dixiemeDeSeconde;
+public class TimerServiceImplWithDelegation extends TimerTask implements TimerService{
+int dixiemeDeSeconde;
     int minutes;
     int secondes;
     int heures;
+    private PropertyChangeSupport PCS=null ;
+    private PropertyChangeEvent pce=null ;
 
     /**
      * Constructeur du DummyTimeServiceImpl Ici, nnous avons hérité de la classe
      * TimerTask, et nous nous avons utilisé un objet Timer, qui permet de
      * réaliser des tocs à chaque N millisecondes
      */
-        /*
-    public DummyTimeServiceImpl() {
+    public TimerServiceImplWithDelegation() {
         Timer timer = new Timer();
-
+        this.PCS =new PropertyChangeSupport(this);
         LocalTime localTime = LocalTime.now();
 
         secondes = localTime.getSecond();
@@ -51,16 +50,16 @@ public class DummyTimeServiceImpl{
         timeChanged();
     }
 
-    List<TimerChangeListener> listeners = new LinkedList<>();
+    
 
     @Override
     public void addTimeChangeListener(TimerChangeListener pl) {
-        listeners.add(pl);
+        PCS.addPropertyChangeListener(pl);
     }
 
     @Override
     public void removeTimeChangeListener(TimerChangeListener pl) {
-        listeners.remove(pl);
+        PCS.removePropertyChangeListener(pl);
     }
 
     @Override
@@ -92,53 +91,69 @@ public class DummyTimeServiceImpl{
         dixiemeDeSeconde = (dixiemeDeSeconde + 1) % 10;
 
         // informer les listeners ! 
-        for (TimerChangeListener l : listeners) {
-            l.propertyChange(TimerChangeListener.DIXEME_DE_SECONDE_PROP,
+         pce=new PropertyChangeEvent(this,TimerChangeListener.DIXEME_DE_SECONDE_PROP,
                     oldValue, dixiemeDeSeconde);
-        }
+         PCS.firePropertyChange(pce);
+           
 
         if (dixiemeDeSeconde == 0) {
             updateSecode();
         }
     }
 
-    private void updateSecode() {
+    protected void updateSecode() {
         int oldValue = secondes;
         secondes = (secondes + 1) % 60;
-
-        for (TimerChangeListener l : listeners) {
-            l.propertyChange(TimerChangeListener.SECONDE_PROP,
+       pce=new PropertyChangeEvent(this,TimerChangeListener.SECONDE_PROP,
                     oldValue, secondes);
-        }
+       PCS.firePropertyChange(pce);
+            
+        
 
         if (secondes == 0) {
             updateMinutes();
         }
     }
 
-    private void updateMinutes() {
+    protected void updateMinutes() {
         int oldValue = minutes;
         minutes = (minutes + 1) % 60;
-
-        for (TimerChangeListener l : listeners) {
-            l.propertyChange(TimerChangeListener.MINUTE_PROP,
+        pce=new PropertyChangeEvent(this,TimerChangeListener.MINUTE_PROP,
                     oldValue, minutes);
-        }
+        PCS.firePropertyChange(pce);
+                
+      
 
         if (minutes == 0) {
             updateHeures();
         }
     }
 
-    private void updateHeures() {
+    protected void updateHeures() {
         int oldValue = heures;
         heures = (heures + 1) % 24;
-
-        for (TimerChangeListener l : listeners) {
-            l.propertyChange(TimerChangeListener.HEURE_PROP,
+        pce=new PropertyChangeEvent(this,TimerChangeListener.HEURE_PROP,
                     oldValue, heures);
-        }
+        PCS.firePropertyChange(pce);
+        
+            
+        
     }
-*/
 
 }
+   
+    
+    
+    /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+
+
+
+
+
+
